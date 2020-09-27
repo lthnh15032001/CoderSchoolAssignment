@@ -71,13 +71,28 @@ export const Week3 = (props) => {
     const getGameResult = (result) => {
         return gameDefine.find(x => x.number == result)
     }
-    const getRateResult = () => {
+    const getRateWinResult = () => {
         var countWin = 0;
         tempArray.forEach((x, i) => {
             getGameResult(x.result).number === 2 ? countWin += 1 : undefined
         })
         return countWin
     }
+    const getRateLoseResult = () => {
+        var countLose = 0;
+        tempArray.forEach((x, i) => {
+            getGameResult(x.result).number === 1 ? countLose += 1 : undefined
+        })
+        return countLose
+    }
+    const getRateTiedResult = () => {
+        var countTied = 0;
+        tempArray.forEach((x, i) => {
+            getGameResult(x.result).number === 0 ? countTied += 1 : undefined
+        })
+        return countTied
+    }
+
     const playAgain = () => {
         tempArray = []
         setCurrentChoice()
@@ -141,9 +156,13 @@ export const Week3 = (props) => {
                     />
                 </View>
                 <View style={styles.wrapTitleResult}>
+                    <Text style={styles.textBottom}>% Win : {Math.round((getRateWinResult() / tempArray.length) * 100)}%</Text>
+                    <Text style={styles.textBottom}>% Lose : {Math.round((getRateLoseResult() / tempArray.length) * 100)}%</Text>
+                    <Text style={styles.textBottom}>% Tied : {Math.round((getRateTiedResult() / tempArray.length) * 100)}%</Text>
+                </View>
+                <View style={styles.wrapTitleResult}>
                     <Text style={styles.textBottom}>History</Text>
-                    <Text style={styles.textBottom}>Total : {tempArray.length}</Text>
-                    <Text style={styles.textBottom}>Win Percent: {Math.round((getRateResult() / tempArray.length) * 100)}%</Text>
+                    <Text style={styles.textBottom}>Total Game Play : {tempArray.length}</Text>
                 </View>
                 {
                     show ?
