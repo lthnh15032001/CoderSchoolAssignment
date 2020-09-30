@@ -4,7 +4,7 @@ const Drawer = createDrawerNavigator();
 import { StackNavigator } from './StackNavigator'
 export const DrawerNavigator = () => {
     return (
-        <Drawer.Navigator initialRouteName={StackNavigator}>
+        <Drawer.Navigator>
             <Drawer.Screen name="StackNavigator" component={StackNavigator} />
         </Drawer.Navigator>
     )
