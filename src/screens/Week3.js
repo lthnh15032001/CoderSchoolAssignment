@@ -101,7 +101,7 @@ export const Week3 = (props) => {
     }
     return (
         <>
-            <HeaderComponent navigation={props.navigation} title="Week3" />
+            <HeaderComponent navigation={props.navigation} title="Week 3" />
             <View style={styles.title}>
                 <Text style={styles.titleText}>{show ? getGameResult(getResult()).name : getResult()}</Text>
                 <TouchableOpacity onPress={() => playAgain()} style={styles.buttonPlayAgain}>

@@ -44,7 +44,7 @@ export const Week2 = (props) => {
     ]
     return (
         <>
-            <HeaderComponent navigation={props.navigation} />
+            <HeaderComponent navigation={props.navigation} title="Week 2" />
             <View style={{ flex: 1 }} >
                 <View style={styles.container}>
                     <Image

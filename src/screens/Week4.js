@@ -6,15 +6,21 @@ import {
 } from "react-native";
 import { HeaderComponent } from '../components/HeaderComponent'
 import { Icon } from '../components/Icon'
+import { dataConfig } from '../data/todoData'
+
 export const Week4 = (props) => {
     const { navigation } = props
+    const [data, setData] = useState(dataConfig)
+    // useEffect(() => {
+        
+    // }, [data])
     return (
         <>
             <HeaderComponent navigation={navigation} title="Week 4" />
             <View style={styles.container}>
                 <Text style={styles.list}>Lists</Text>
                 <View style={styles.wrapBox}>
-                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("AllTodo") }}>
+                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("AllTodo", { data: data }) }}>
                         <Icon Ionicons name="add-circle-outline" size={30} color="blue" />
                         <Text style={styles.textAll}>All</Text>
                         <Text style={styles.number}>15 Tasks</Text>
