@@ -1,10 +1,10 @@
 import React, { Component, useEffect, useState } from "react";
 import { NavigationContainer } from '@react-navigation/native'
-import { StackNavigator } from './StackNavigator'
+import { DrawerNavigator } from './DrawerNavigator'
 export const Router = () => {
     return (
         <NavigationContainer>
-            <StackNavigator />
+            <DrawerNavigator />
         </NavigationContainer>
     )
 }

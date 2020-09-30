@@ -14,6 +14,9 @@ export const HeaderComponent = (props) => {
     const onButtonClosePress = () => {
         navigation.goBack();
     };
+    const openDrawer = () => {
+        navigation.openDrawer();
+    }
     // console.log(navigation.canGoBack())
     return (
         <SafeAreaView
@@ -26,7 +29,7 @@ export const HeaderComponent = (props) => {
                         <Icon AntDesign size={26} name="arrowleft" />
                     </TouchableOpacity>
                     <Text>{props.title && props.title}</Text>
-                    <TouchableOpacity style={styles.buttonClose}>
+                    <TouchableOpacity style={styles.buttonClose} onPress={() => openDrawer()}>
                         <Icon MaterialCommunityIcons size={20} name="widgets" />
                     </TouchableOpacity>
                 </View>
