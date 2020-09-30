@@ -5,7 +5,7 @@ import {
     StyleSheet
 } from "react-native";
 
-export const Home3 = () =>  {
+export const Week4 = () =>  {
     return (
         <View style={styles.container}>
             <Text>Home3</Text>

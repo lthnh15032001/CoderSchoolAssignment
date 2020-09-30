@@ -36,7 +36,7 @@ export const TabButton = (props) => {
         case "Week3":
             iconName = "align-left";
             break;
-        case "Home3":
+        case "Week4":
             iconName = "user"
         default:
             break;
