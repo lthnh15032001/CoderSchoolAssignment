@@ -14,20 +14,20 @@ export const Week4 = (props) => {
             <View style={styles.container}>
                 <Text style={styles.list}>Lists</Text>
                 <View style={styles.wrapBox}>
-                    <TouchableOpacity style={styles.all} onPress={() => { }}>
-                        <Icon Feather name="user" size={30} color="blue" />
+                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("AllTodo") }}>
+                        <Icon Ionicons name="add-circle-outline" size={30} color="blue" />
                         <Text style={styles.textAll}>All</Text>
                         <Text style={styles.number}>15 Tasks</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.all}>
-                        <Icon Feather name="user" size={30} color="blue" />
+                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("Complete") }}>
+                        <Icon Ionicons name="checkmark-done" size={30} color="blue" />
                         <Text style={styles.textAll}>Complete</Text>
                         <Text style={styles.number}>13 Tasks</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.wrapBox}>
-                    <TouchableOpacity style={styles.all}>
-                        <Icon Feather name="user" size={30} color="blue" />
+                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("Active") }}>
+                        <Icon Feather name="play" size={30} color="blue" />
                         <Text style={styles.textAll}>Active</Text>
                         <Text style={styles.number}>12 Tasks</Text>
                     </TouchableOpacity>

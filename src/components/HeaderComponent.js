@@ -18,6 +18,9 @@ export const HeaderComponent = (props) => {
         navigation.openDrawer();
     }
     // console.log(navigation.canGoBack())
+    const getGoBack = () => {
+        return navigation.canGoBack()
+    }
     return (
         <SafeAreaView
             forceInset={{ top: "always" }}
@@ -25,10 +28,10 @@ export const HeaderComponent = (props) => {
             <View style={styles.headerContainer}>
                 <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent={true} />
                 <View style={styles.headerWraper}>
-                    <TouchableOpacity style={styles.buttonClose} {...navigation.canGoBack() && `onPress=${onButtonClosePress}`} >
+                    <TouchableOpacity style={styles.buttonClose} onPress={getGoBack() && onButtonClosePress} >
                         <Icon AntDesign size={26} name="arrowleft" />
                     </TouchableOpacity>
-                    <Text>{props.title && props.title}</Text>
+                    <Text style={styles.title}>{props.title && props.title}</Text>
                     <TouchableOpacity style={styles.buttonClose} onPress={() => openDrawer()}>
                         <Icon MaterialCommunityIcons size={20} name="widgets" />
                     </TouchableOpacity>
@@ -39,6 +42,10 @@ export const HeaderComponent = (props) => {
 }
 
 const styles = StyleSheet.create({
+    title: {
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
     headerContainer: {
         paddingTop: 10,
         paddingLeft: 15,
