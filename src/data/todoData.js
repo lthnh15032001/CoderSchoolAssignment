@@ -32,6 +32,7 @@ export const dataConfig = [
         body: 'Use knowledge gained at CoderSchool to build new todo app'
     }
 ]
-
-// 0 = active => green
-// 1 = done => blue
+export const statusData = [
+    { name: "Active", status: 0 },
+    { name: "Done", status: 1 }
+]

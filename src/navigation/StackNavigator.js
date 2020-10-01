@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from "react";
 import { createStackNavigator } from '@react-navigation/stack';
 import { TabBottom } from './TabBottom'
-import { AllTodo, Active, Complete } from "../screens";
+import { AllTodo, Active, Complete, DetailTodoList } from "../screens";
 const Stack = createStackNavigator();
 
 export const StackNavigator = () => {
@@ -11,6 +11,7 @@ export const StackNavigator = () => {
             <Stack.Screen name="AllTodo" component={AllTodo} />
             <Stack.Screen name="Active" component={Active} />
             <Stack.Screen name="Complete" component={Complete} />
+            <Stack.Screen name="DetailTodoList" component={DetailTodoList} />
         </Stack.Navigator>
     )
 }

@@ -10,22 +10,22 @@ import { dataConfig } from '../data/todoData'
 
 export const Week4 = (props) => {
     const { navigation } = props
-    const [data, setData] = useState(dataConfig)
+    const [dataInit, setDataInit] = useState(dataConfig)
     // useEffect(() => {
-        
-    // }, [data])
+    //     console.log(dataInit) 
+    // }, [dataInit])
     return (
         <>
             <HeaderComponent navigation={navigation} title="Week 4" />
             <View style={styles.container}>
                 <Text style={styles.list}>Lists</Text>
                 <View style={styles.wrapBox}>
-                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("AllTodo", { data: data }) }}>
+                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("AllTodo", { dataInit: dataInit, setDataInit: setDataInit }) }}>
                         <Icon Ionicons name="add-circle-outline" size={30} color="blue" />
                         <Text style={styles.textAll}>All</Text>
                         <Text style={styles.number}>15 Tasks</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("Complete") }}>
+                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("Complete", {dataInit : dataInit}) }}>
                         <Icon Ionicons name="checkmark-done" size={30} color="blue" />
                         <Text style={styles.textAll}>Complete</Text>
                         <Text style={styles.number}>13 Tasks</Text>
