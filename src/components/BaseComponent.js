@@ -15,7 +15,7 @@ import {
 import { statusData } from '../data/todoData'
 import { Icon } from '../components/Icon'
 export const BaseComponent = (props) => {
-    const { navigation, route, dataInit, setDataInit, currentRoute } = props
+    const { navigation, route, dataInit, setDataInit, currentRoute, style } = props
     // const {  } = route.params
 
     const [data, setData] = useState(dataInit)
@@ -90,7 +90,7 @@ export const BaseComponent = (props) => {
                     horizontal={false}
                     keyExtractor={(item, index) => index.toString()}
                     extraData={update}
-                    contentContainerStyle={styles.container}
+                    contentContainerStyle={[styles.container, style]}
                 />
             </ScrollView>
         </>

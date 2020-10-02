@@ -7,9 +7,9 @@ import {
 import { HeaderComponent } from '../components/HeaderComponent'
 import { Icon } from '../components/Icon'
 import { dataConfig } from '../data/todoData'
-
+import { BaseComponent } from '../components/BaseComponent'
 export const Week4 = (props) => {
-    const { navigation } = props
+    const { navigation, route } = props
     const [dataInit, setDataInit] = useState(dataConfig)
     // useEffect(() => {
     //     console.log(dataInit) 
@@ -38,12 +38,25 @@ export const Week4 = (props) => {
                         <Text style={styles.number}>12 Tasks</Text>
                     </TouchableOpacity>
                 </View>
+                <Text style={styles.notDone}>Your have'nt done works (Active work)</Text>
+                <BaseComponent
+                    navigation={navigation}
+                    route={route}
+                    dataInit={dataInit}
+                    currentRoute="main"
+                    style={{marginBottom: 30}}
+                />
             </View>
         </>
     );
 }
 
 const styles = StyleSheet.create({
+    notDone: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginVertical: 10
+    },
     number: {
         color: 'grey',
         marginBottom: 17
