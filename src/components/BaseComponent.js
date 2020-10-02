@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, TextInput, KeyboardAvoidingView, ScrollView, YellowBox, Keyboard } from "react-native";
-import { HeaderComponent } from './HeaderComponent'
+import {
+    StyleSheet,
+    View,
+    Text,
+    TouchableOpacity,
+    FlatList,
+    TextInput,
+    KeyboardAvoidingView,
+    ScrollView,
+    YellowBox,
+    Keyboard,
+    Alert
+} from "react-native";
 import { statusData } from '../data/todoData'
+import { Icon } from '../components/Icon'
 export const BaseComponent = (props) => {
     const { navigation, route, dataInit, setDataInit, currentRoute } = props
     // const {  } = route.params
@@ -36,7 +48,20 @@ export const BaseComponent = (props) => {
 
     }
     const handleDelete = (index) => {
-        console.log(index)
+        Alert.alert('Are you sure to delete this to do ?', "", [
+            {
+                text: "Cancel",
+                onPress: () => ""
+            },
+            {
+                text: "Ok",
+                onPress: () => {
+                    data.splice(index, 1)
+                    setUpdate(!update)
+                }
+            },
+
+        ])
     }
     return (
         <>
@@ -75,7 +100,7 @@ export const FooterFlatList = ({ currentRoute, update, setUpdate, data }) => {
     const [text, setText] = useState();
     // console.log(text)
     const handleAddText = () => {
-        Keyboard. dismiss()
+        Keyboard.dismiss()
         data.push({
             body: text,
             status: 0
@@ -95,7 +120,7 @@ export const FooterFlatList = ({ currentRoute, update, setUpdate, data }) => {
                         value={text}
                     />
                     <TouchableOpacity style={styles.buttonSubmit} onPress={() => handleAddText()}>
-                        <Text style={{ color: 'white' }}>Submit</Text>
+                        <Icon AntDesign name="arrowup" size={25} color="white" />
                     </TouchableOpacity>
                 </View>
             }
