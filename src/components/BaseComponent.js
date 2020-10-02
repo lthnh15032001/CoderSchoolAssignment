@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, FlatList, TextInput, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, FlatList, TextInput, KeyboardAvoidingView, ScrollView, YellowBox, Keyboard } from "react-native";
 import { HeaderComponent } from './HeaderComponent'
 import { statusData } from '../data/todoData'
 export const BaseComponent = (props) => {
@@ -40,8 +40,11 @@ export const BaseComponent = (props) => {
     }
     return (
         <>
-            <KeyboardAvoidingView style={styles.container}>
+            <ScrollView
+                keyboardShouldPersistTaps="always"
+            >
                 <FlatList
+                    keyboardShouldPersistTaps="always"
                     data={currentRoute === "all" ? data : currentRoute === "complete" ? data.filter(x => x.status === 1) : data.filter(x => x.status === 0)}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item, index }) =>
@@ -58,32 +61,54 @@ export const BaseComponent = (props) => {
                             </TouchableOpacity>
                         </View>
                     }
+                    ListFooterComponent={<FooterFlatList data={data} currentRoute={currentRoute} update={update} setUpdate={setUpdate} />}
                     horizontal={false}
                     keyExtractor={(item, index) => index.toString()}
                     extraData={update}
+                    contentContainerStyle={styles.container}
                 />
-                {
-                    currentRoute === "all" &&
-                    <View style={styles.containInput}>
-                        <TextInput
-                            placeholder="Input Your To Do"
-                            style={styles.inputStyles}
-                        />
-                        <TouchableOpacity style={styles.buttonSubmit}>
-                            <Text style={{ color: 'white' }}>Submit</Text>
-                        </TouchableOpacity>
-                    </View>
-                }
-            </KeyboardAvoidingView>
-
-
+            </ScrollView>
+        </>
+    )
+}
+export const FooterFlatList = ({ currentRoute, update, setUpdate, data }) => {
+    const [text, setText] = useState();
+    // console.log(text)
+    const handleAddText = () => {
+        Keyboard. dismiss()
+        data.push({
+            body: text,
+            status: 0
+        })
+        setText("")
+        setUpdate(!update)
+    }
+    return (
+        <>
+            {
+                currentRoute === "all" &&
+                <View style={styles.containInput}>
+                    <TextInput
+                        placeholder="Input Your To Do"
+                        style={styles.inputStyles}
+                        onChangeText={(value) => setText(value)}
+                        value={text}
+                    />
+                    <TouchableOpacity style={styles.buttonSubmit} onPress={() => handleAddText()}>
+                        <Text style={{ color: 'white' }}>Submit</Text>
+                    </TouchableOpacity>
+                </View>
+            }
         </>
     )
 }
 
+YellowBox.ignoreWarnings([
+    'VirtualizedLists should never be nested'
+])
 const styles = StyleSheet.create({
     wrapFlat: {
-        marginBottom: 100
+        // marginBottom: 100
     },
     textDisplay: {
         flexWrap: 'wrap',
@@ -119,7 +144,7 @@ const styles = StyleSheet.create({
     },
     container: {
         padding: 15,
-        paddingBottom: 120,
+        // paddingBottom: 80,
     },
     inputStyles: {
         borderWidth: 0.6,
@@ -130,9 +155,7 @@ const styles = StyleSheet.create({
     },
     containInput: {
         flexDirection: 'row',
-        // marginHorizontal: 20,
-        marginBottom: 30,
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
     },
     buttonSubmit: {
         elevation: 20,

@@ -20,19 +20,19 @@ export const Week4 = (props) => {
             <View style={styles.container}>
                 <Text style={styles.list}>Lists</Text>
                 <View style={styles.wrapBox}>
-                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("AllTodo", { dataInit: dataInit, setDataInit: setDataInit }) }}>
+                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("AllTodo", { dataInit: dataInit }) }}>
                         <Icon Ionicons name="add-circle-outline" size={30} color="blue" />
                         <Text style={styles.textAll}>All</Text>
                         <Text style={styles.number}>15 Tasks</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("Complete", { dataInit: dataInit, setDataInit: setDataInit }) }}>
+                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("Complete", { dataInit: dataInit }) }}>
                         <Icon Ionicons name="checkmark-done" size={30} color="blue" />
                         <Text style={styles.textAll}>Complete</Text>
                         <Text style={styles.number}>13 Tasks</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.wrapBox}>
-                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("Active", { dataInit: dataInit, setDataInit: setDataInit }) }}>
+                    <TouchableOpacity style={styles.all} onPress={() => { navigation.navigate("Active", { dataInit: dataInit }) }}>
                         <Icon Feather name="play" size={30} color="blue" />
                         <Text style={styles.textAll}>Active</Text>
                         <Text style={styles.number}>12 Tasks</Text>

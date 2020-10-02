@@ -4,7 +4,7 @@ import { HeaderComponent } from '../components/HeaderComponent'
 import { BaseComponent } from '../components/BaseComponent'
 export const Active = (props) => {
     const { navigation, route } = props
-    const { dataInit, setDataInit } = route.params
+    const { dataInit } = route.params
 
     return (
         <>
@@ -13,7 +13,6 @@ export const Active = (props) => {
                 navigation={navigation}
                 route={route}
                 dataInit={dataInit}
-                setDataInit={setDataInit}
                 currentRoute="Active"
             />
         </>

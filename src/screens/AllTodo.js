@@ -4,7 +4,7 @@ import { HeaderComponent } from '../components/HeaderComponent'
 import { BaseComponent } from '../components/BaseComponent'
 export const AllTodo = (props) => {
     const { navigation, route } = props
-    const { dataInit, setDataInit } = route.params
+    const { dataInit } = route.params
     return (
         <>
             <HeaderComponent navigation={navigation} title="All Todo List" />
@@ -12,7 +12,6 @@ export const AllTodo = (props) => {
                 navigation={navigation}
                 route={route}
                 dataInit={dataInit}
-                setDataInit={setDataInit}
                 currentRoute="all"
             />
             
