@@ -34,6 +34,7 @@ export const BaseComponent = (props) => {
             let findData = dataComplete.find((x, i) => i === index)
             getStatus(findData.status).status === 1 ? findData.status = 0 : findData.status = 1;
             dataComplete[index] = findData
+            // console.log(data)
             // console.log(dataComplete)
         } else {
             let dataComplete = data.filter(x => x.status === 0)
@@ -44,9 +45,7 @@ export const BaseComponent = (props) => {
         setUpdate(!update)
         navigation.navigate("DetailTodoList", { dataDetail: item, index: index })
     }
-    const handle = () => {
-
-    }
+    
     const handleDelete = (index) => {
         Alert.alert('Are you sure to delete this to do ?', "", [
             {
@@ -56,7 +55,24 @@ export const BaseComponent = (props) => {
             {
                 text: "Ok",
                 onPress: () => {
-                    data.splice(index, 1)
+                    // data.splice(index, 1)
+                    if (currentRoute === "all") {
+                        data.splice(index, 1)
+                    } else if (currentRoute === "complete") {
+                        let dataComplete = data.filter(x => x.status === 1)
+                        let dataActive = data.filter(x => x.status === 0)
+                        dataComplete.splice(index, 1)
+                        let result = dataComplete.concat(dataActive)
+                        setData(result)
+                        setDataInit(result)
+                    } else {
+                        let dataComplete = data.filter(x => x.status === 1)
+                        let dataActive = data.filter(x => x.status === 0)
+                        dataActive.splice(index, 1)
+                        let result = dataComplete.concat(dataActive)
+                        setData(result)
+                        setDataInit(result)
+                    }
                     setUpdate(!update)
                 }
             },
@@ -129,7 +145,8 @@ export const FooterFlatList = ({ currentRoute, update, setUpdate, data }) => {
 }
 
 YellowBox.ignoreWarnings([
-    'VirtualizedLists should never be nested'
+    'VirtualizedLists should never be nested',
+    'Non-serializable values were found in the navigation state',
 ])
 const styles = StyleSheet.create({
     wrapFlat: {
