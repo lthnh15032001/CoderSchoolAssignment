@@ -10,7 +10,7 @@ export const DetailTodoList = (props) => {
     }
     return (
         <>
-            <HeaderComponent navigation={navigation} title={`Number: ` + index} />
+            <HeaderComponent navigation={navigation} title={`Number: ${index + 1}`} />
             <View style={styles.conatiner}>
                 <View style={[styles.wrapContent, { backgroundColor: getStatus(dataDetail.status).status === 0 ? "green" : "blue" }]}>
                     <Text style={styles.body}>{dataDetail.body}</Text>

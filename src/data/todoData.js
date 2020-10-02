@@ -30,7 +30,34 @@ export const dataConfig = [
     {
         status: 0,
         body: 'Use knowledge gained at CoderSchool to build new todo app'
-    }
+    },
+    
+    {
+        status: 0,
+        body: 'Read results from Google again'
+    },
+    {
+        status: 0,
+        body: 'Spend some more time thinking'
+    },
+    {
+        status: 0,
+        body: 'Use knowledge gained at CoderSchool to build new todo app'
+    },
+    
+    {
+        status: 0,
+        body: 'Read results from Google again'
+    },
+    {
+        status: 0,
+        body: 'Spend some more time thinking'
+    },
+    {
+        status: 0,
+        body: 'Use knowledge gained at CoderSchool to build new todo app'
+    },
+    
 ]
 export const statusData = [
     { name: "Active", status: 0 },
