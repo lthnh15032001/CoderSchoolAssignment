@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Text, ActivityIndicator, FlatList } from 'react-native'
+import React, { useEffect, useState, useRef } from 'react'
+import { StyleSheet, View, Text, ActivityIndicator, FlatList, Linking } from 'react-native'
 import { HeaderComponent } from '../components/HeaderComponent'
 import { ImageArticle } from '../components/ImageArticles'
 import { myApiKey } from '../data/apiData'
@@ -10,47 +10,81 @@ const configApiUrl = "https://newsapi.org/v2/top-headlines?country=us&category=b
 export const Week5 = (props) => {
     const { navigation } = props
     // console.log(configApiUrl)
-    const [data, setData] = useState()
+    const [data, setData] = useState([])
     const [loading, setLoading] = useState(true);
+    const [lastPageReached, setLastPageReached] = useState(false);
+    const [hasErrored, setHasApiError] = useState(false);
+    const [pageNumber, setPageNumber] = useState(1);
+    const flatListRef = React.useRef()
+    const toTop = () => {
+        flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
+    }
     useEffect(() => {
         getPosts()
-    }, [])
+    }, [data])
     const getPosts = async () => {
         try {
-            let response = await fetch(configApiUrl);
+            let response = await fetch(configApiUrl + `&page=${pageNumber}`);
             let service = await response.json();
             let { status, totalResults, articles } = service
             if (!status) return;
-            setData({ totalResults: totalResults, articles: articles })
+
+            const hasMoreArticles = service.articles.length > 0;
+            if (hasMoreArticles) {
+                const newArticles = filterForUniqueArticles(
+                    data.concat(service.articles)
+                )
+                setData(newArticles)
+                setPageNumber(pageNumber + 1);
+            } else {
+                setLastPageReached(true);
+            }
             setLoading(false);
         } catch (err) {
-            console.log("err")
+            setHasApiError(true)
         }
     }
+    const filterForUniqueArticles = arr => {
+        const cleaned = [];
+        arr.forEach(itm => {
+            let unique = true;
+            cleaned.forEach(itm2 => {
+                const isEqual = JSON.stringify(itm) === JSON.stringify(itm2);
+                if (isEqual) unique = false;
+            });
+            if (unique) cleaned.push(itm);
+        });
+        return cleaned;
+    };
+    console.log(data)
     return (
         <>
 
-            {
+            { hasErrored ?
+                <View style={styles.container}>
+                    <Text>Sorry, something wrong, Try Again</Text>
+                </View>
+                :
                 loading ?
                     <View style={styles.container}>
                         <ActivityIndicator size="large" color="gray" />
                     </View>
                     :
                     <>
-                        <HeaderComponent navigation={navigation} title="Week 5" />
+                        <HeaderComponent navigation={navigation} title={"Total Posts: " + data.length} />
                         <FlatList
                             keyboardShouldPersistTaps="always"
-                            data={data.articles}
+                            data={data}
+                            ref={flatListRef}
                             showsHorizontalScrollIndicator={false}
                             renderItem={({ item, index }) =>
-                                <TouchableOpacity style={styles.wrapArticle}>
+                                <View style={styles.wrapArticle}>
                                     <ImageArticle
                                         img={item}
                                         index={index}
                                         resizeMode="cover"
                                         width="100%"
                                         aspectRatio={1.4}
-                                    // styles={{ marginTop: 10 }}
                                     />
                                     <View style={styles.wrapDes}>
                                         <View style={styles.wrapPublish}>
@@ -59,24 +93,25 @@ export const Week5 = (props) => {
                                         </View>
                                         <View style={styles.wrapPublish}>
                                             <Text style={styles.title}>Published: </Text>
-                                            <Text style={styles.source}>{moment(item.publishedAt).format('LLL')}</Text>
+                                            <Text style={styles.source}>{moment(item.publishedAt).startOf('hour').fromNow()}</Text>
                                         </View>
                                     </View>
                                     <View style={{ padding: 15, paddingTop: 10 }}>
                                         <Text style={styles.mainTitle}>{item.title}</Text>
                                         <Text style={styles.description}>{item.content}</Text>
                                     </View>
-                                    <View>
-                                        <TouchableOpacity>
-                                            <Icon AntDesign size={26} name="arrowright" />
-                                        </TouchableOpacity>
-                                    </View>
-                                </TouchableOpacity>
+                                    <TouchableOpacity style={styles.arrow} onPress={() => Linking.openURL(item.url)}>
+                                        <Text style={{ marginRight: 10, color: 'white' }}>Read More</Text>
+                                        <Icon AntDesign size={26} name="arrowright" color="white" />
+                                    </TouchableOpacity>
+                                </View>
                             }
+                            ListFooterComponent={<ListFooter lastPageReached={lastPageReached} toTop={toTop} />}
                             horizontal={false}
                             keyExtractor={(item, index) => index.toString()}
                             contentContainerStyle={styles.wrapImg}
-                        // extraData={update}
+                            onEndReached={getPosts}
+                            onEndReachedThreshold={0}
                         />
                     </>
             }
@@ -84,8 +119,47 @@ export const Week5 = (props) => {
         </>
     )
 }
-
+const ListFooter = ({ lastPageReached, toTop }) => {
+    return (
+        <View style={styles.containFooter}>
+            {lastPageReached ?
+                <View style={{flexDirection:'row'}}>
+                    <Text style={styles.noMore}>No more articles</Text>
+                    <TouchableOpacity onPress={toTop} style={{ backgroundColor: 'white', borderRadius: 50, padding: 15 }}>
+                        {/* <Text style={{ color: 'white' }}>
+                        </Text> */}
+                        <Icon AntDesign color="black" name="arrowup" size={21} />
+                    </TouchableOpacity>
+                </View> :
+                <ActivityIndicator
+                    size="large"
+                    color="gray"
+                />}
+        </View>
+    )
+}
 const styles = StyleSheet.create({
+    noMore: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginRight: 15,
+        marginTop:15
+    },
+    containFooter: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    arrow: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        padding: 10,
+        backgroundColor: '#53703C'
+
+    },
     wrapPublish: {
         flexDirection: 'row',
         paddingLeft: 12
