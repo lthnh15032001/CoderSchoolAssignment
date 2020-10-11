@@ -6,6 +6,7 @@ import { myApiKey } from '../data/apiData'
 import moment from 'moment'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Icon } from '../components/Icon'
+
 const configApiUrl = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=" + myApiKey
 export const Week5 = (props) => {
     const { navigation } = props
@@ -19,10 +20,9 @@ export const Week5 = (props) => {
     const toTop = () => {
         flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
     }
-    useEffect(() => {
-        getPosts()
-    }, [data])
+
     const getPosts = async () => {
+        if (lastPageReached) return;
         try {
             let response = await fetch(configApiUrl + `&page=${pageNumber}`);
             let service = await response.json();
@@ -39,11 +39,14 @@ export const Week5 = (props) => {
             } else {
                 setLastPageReached(true);
             }
-            setLoading(false);
         } catch (err) {
             setHasApiError(true)
         }
+        setLoading(false);
     }
+    useEffect(() => {
+        getPosts()
+    }, [])
     const filterForUniqueArticles = arr => {
         const cleaned = [];
         arr.forEach(itm => {
@@ -72,6 +75,7 @@ export const Week5 = (props) => {
                     :
                     <>
                         <HeaderComponent navigation={navigation} title={"Total Posts: " + data.length} />
+                        
                         <FlatList
                             keyboardShouldPersistTaps="always"
                             data={data}
@@ -111,7 +115,7 @@ export const Week5 = (props) => {
                             keyExtractor={(item, index) => index.toString()}
                             contentContainerStyle={styles.wrapImg}
                             onEndReached={getPosts}
-                            onEndReachedThreshold={0}
+                            onEndReachedThreshold={1}
                         />
                     </>
             }
