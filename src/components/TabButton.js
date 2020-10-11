@@ -38,6 +38,10 @@ export const TabButton = (props) => {
             break;
         case "Week4":
             iconName = "user"
+            break;
+        case "Week5":
+            iconName = "user"
+            break;
         default:
             break;
     }
